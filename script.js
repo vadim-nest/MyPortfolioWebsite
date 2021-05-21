@@ -11,3 +11,6 @@
 //     yellow button on hover : #FFD633
 //     yellow button on press : #FFCC00
 
+window.onload = function () {
+    
+}
