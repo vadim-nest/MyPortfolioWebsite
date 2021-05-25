@@ -13,4 +13,12 @@
 
 window.onload = function () {
     
+    // Changing height of a line between project img and text
+    // let verticalLine = document.querySelectorAll(".vl");
+    // verticalLine.forEach(element => {
+    //     element.style.height = (document.querySelector("#stopwatchPic").offsetHeight * 0.6);
+    // });  
+    // Not working!!!
+    document.querySelector(".vl").getElementsByClassName.height = (document.querySelector("#stopwatchPic").offsetHeight * 0.6);
+
 }
