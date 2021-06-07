@@ -88,7 +88,7 @@ p {
 #dark-theme {
   flex: 1;
   margin-top: 3px;
-  color: #dfdfdf;
+  color: #f3f1f1;
 }
 /* 
   ABOUT
@@ -177,7 +177,7 @@ p {
 }
 .projects img {
   width: 100%;
-  padding-right: 10px;
+  padding-right: 20px;
   height: auto;
   /* temp border */
   border: 1px solid #222222;
@@ -218,6 +218,11 @@ p {
   margin-left: 15vw;
   flex: 1;
 }
+.mail-link {
+  text-decoration: none;
+  color: #222222;
+  font-size: 18px;
+}
 #links-row {
   flex: 1;
   margin-top: 30px;
@@ -228,4 +233,14 @@ p {
   color: #222222;
   margin: auto 30px;
   /* margin-bottom: 50px; */
+}
+.mail-icon {
+  color: #222222;
+  font-size: 53px;
+  /* font-family: "Montserrat", sans-serif; */
+  font-weight: bold;
+  /* font-style: italic; */
+  text-decoration: none;
+  /* margin-bottom: 5px; */
+  text-align: top;
 }
