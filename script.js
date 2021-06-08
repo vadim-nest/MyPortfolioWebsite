@@ -1,3 +1,5 @@
+// Port Number: http://127.0.0.1:5500/
+
 // Colours:
 //     white:           #FFFFFF
 //     black:           #222222
@@ -24,6 +26,8 @@ window.onload = function () {
     namePosition = namePosition + (document.querySelector("#about h1").offsetHeight / 2);
     const logoV = document.querySelector("#logo .red");
     const logoG = document.querySelector("#logo");
+    const innerText = contactButton.innerHTML;
+    let innerTextLength = innerText.length;
 
 
     ////////////////////////////////////////////
@@ -68,12 +72,12 @@ window.onload = function () {
             // Changing contact button on scroll (to envelope)
             contactButton.style.transition = "all 0.2s ease-in-out";
 
-            // YOU DIDN'T FINISH HERE. YOU NEED TO CHANGE THE WORD cONTACT LETTER BY LETTER 
-            // for(let i = 0; i < )
-            // setTimeout(function(){
-            //     contactButton.style.color = "red";  
-            // }, 5000);
-            contactButton.innerHTML = "";
+            // Loop for removing letters one by one with a slight delay
+            for(let i = innerTextLength; i > 0; --i) {
+                setTimeout(() => {
+                    contactButton.innerHTML = contactButton.innerHTML.substring(0, contactButton.innerHTML.length - 1);
+                }, i * 20);
+            }
 
             contactButton.classList.toggle("far");
             contactButton.classList.toggle("fa-envelope");
@@ -91,13 +95,18 @@ window.onload = function () {
 
         } else if ((top < changeOnProjects) && toggleProjectChanged) {
             // Changing contact button on scroll (to 'Contact')
+            contactButton.style.transition = "none";
+            contactButton.style.fontSize = "1.2em";
             contactButton.style.transition = "all 0.2s ease-in-out";
             contactButton.style.width = "150px";
 
-
-            // contactButton.style.transition = "none";
-            contactButton.style.fontSize = "1.2em"; 
-            contactButton.innerHTML = "Contact";
+            // Loop for adding letters one by one with a slight delay
+            for(let i = 0; i < innerTextLength; ++i) {
+                setTimeout(() => {
+                    contactButton.innerHTML = contactButton.innerHTML + innerText.charAt(i);
+                    console.log(i);
+                }, i * 40);
+            }
             contactButton.classList.toggle("far");
             contactButton.classList.toggle("fa-envelope");
             toggleProjectChanged = false;
@@ -112,14 +121,18 @@ window.onload = function () {
 
         // Change logo appearance after the name is reached
         if ((top > namePosition) && !toggleLogoChanged) {
-            logoV.style.transition = "all 0.2s ease-in-out";
-            logoV.style.color = "#ee0000";
+            setTimeout(() => {
+                logoV.style.transition = "all 0.2s ease-in-out";
+                logoV.style.color = "#ee0000";
+            }, 50);
             logoG.style.transition = "all 0.2s ease-in-out";
             logoG.style.color = "#222222";
             toggleLogoChanged = true;
         } else if ((top < namePosition) && toggleLogoChanged) {
             logoV.style.color = "#fff";
-            logoG.style.color = "#fff";
+            setTimeout(() => {
+                logoG.style.color = "#fff";
+            }, 50);
             toggleLogoChanged = false;
         }
 
