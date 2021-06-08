@@ -19,20 +19,28 @@ window.onload = function () {
     let changeOnProjects = window.innerHeight / 2;
     let toggleProjectChanged = false;
     let toggleLogoChanged = false;
+    let toggleContactChanged = false;
     const buttonAbout = document.querySelector("#button-about");
     const buttonProjects = document.querySelector("#button-projects");
     const buttonContact = document.querySelector("#button-contact");
-    let namePosition = document.querySelector("#about h1").getBoundingClientRect().top;
-    namePosition = namePosition + (document.querySelector("#about h1").offsetHeight / 2);
+    let namePosition = elementLocation(document.querySelector("#about h1")).top / 2;
     const logoV = document.querySelector("#logo .red");
     const logoG = document.querySelector("#logo");
     const innerText = contactButton.innerHTML;
     let innerTextLength = innerText.length;
+    let contactPageStart = elementLocation(document.querySelector("#contact")).top;
+    let contactButtonRight = (window.innerWidth - document.querySelector("#contact-float").offsetLeft - document.querySelector("#contact-float").offsetWidth);
+    let buttonHidden = false;
+
+
 
 
     ////////////////////////////////////////////
     // Styling
     ///////////////////////////////////////////
+
+
+
 
     // Contact button styling
     contactButton.style.border = "solid 3px #FFDB4D";
@@ -41,33 +49,34 @@ window.onload = function () {
         contactButton.style.transition = "all 0.1s ease-in-out";
         contactButton.style.background = "#FFD633"
         contactButton.style.border = "solid 3px #FFD633"
+        contactButton.style.boxShadow = "0px 3px 5px rgba(0, 0, 0, 0.1)";
     }
     contactButton.onmouseout = function() { 
         contactButton.style.transition = "all 0.4s ease-in-out";
         contactButton.style.background = "#FFDB4D" 
         contactButton.style.border = "solid 3px #FFDB4D"
+        contactButton.style.boxShadow = "0px 4px 7px rgba(0, 0, 0, 0.1)";
     }
 
-    // Button Start/Stop on mousedown/mouseup
+    // Contact button on mousedown/mouseup
     contactButton.addEventListener('mousedown', e => {
         contactButton.style.background = "#FFCC00";
         contactButton.style.border = "solid 3px #FFCC00";
+        contactButton.style.boxShadow = "0px 0px 0px rgba(0, 0, 0, 0.1)";
     });
 
     contactButton.addEventListener('mouseup', e => {
         contactButton.style.background = "#FFD633";
         contactButton.style.border = "solid 3px #FFD633";
+        contactButton.style.boxShadow = "0px 4px 7px rgba(0, 0, 0, 0.1)";
         document.getElementById('contact').style.transition = "all 0.4s ease-in-out";
         document.getElementById('contact').scrollIntoView({behavior: "smooth"});         
     });
 
 
-    // Changing on scroll
-    console.log(namePosition);
-
+    // Changing floating button on scroll
     window.onscroll = function() {
         let top = window.scrollY;
-        console.log(top);
         if ((top > changeOnProjects) && !toggleProjectChanged) {
             // Changing contact button on scroll (to envelope)
             contactButton.style.transition = "all 0.2s ease-in-out";
@@ -86,13 +95,6 @@ window.onload = function () {
 
             contactButton.style.width = "57px";
 
-            // Changing the red border in header
-            buttonProjects.style.transition = "all 0.2s ease-in-out";
-            buttonProjects.style.borderBottom = "3px solid #ee0000";
-            buttonAbout.style.transition = "all 0.2s ease-in-out";
-            buttonAbout.style.borderBottom = "3px solid #ffffff";
-
-
         } else if ((top < changeOnProjects) && toggleProjectChanged) {
             // Changing contact button on scroll (to 'Contact')
             contactButton.style.transition = "none";
@@ -104,7 +106,6 @@ window.onload = function () {
             for(let i = 0; i < innerTextLength; ++i) {
                 setTimeout(() => {
                     contactButton.innerHTML = contactButton.innerHTML + innerText.charAt(i);
-                    console.log(i);
                 }, i * 40);
             }
             contactButton.classList.toggle("far");
@@ -118,8 +119,6 @@ window.onload = function () {
             buttonProjects.style.borderBottom = "3px solid #ffffff";
         }
 
-
-        // Change logo appearance after the name is reached
         if ((top > namePosition) && !toggleLogoChanged) {
             setTimeout(() => {
                 logoV.style.transition = "all 0.2s ease-in-out";
@@ -136,7 +135,44 @@ window.onload = function () {
             toggleLogoChanged = false;
         }
 
+
+
+        // Hiding Contact Floating Button when reach Contact Section
+        let floatingButtonLocation =  elementLocation(document.querySelector("#contact-float")).top;
+        document.querySelector("#contact-float").style.transition = "all 0.2s ease-in-out";
+        if (floatingButtonLocation >= contactPageStart && !buttonHidden) {
+            buttonHidden = true;
+            for(let i = contactButtonRight; i < window.innerWidth; ++i) {
+                setTimeout(() => {
+                    contactButton.style.right = (contactButtonRight - i).toString() + "px";
+                }, i * 0.3);
+            }
+        } else if (floatingButtonLocation <= contactPageStart && buttonHidden) {
+            buttonHidden = false;
+            for(let i = window.innerWidth; i > (contactButtonRight); --i) {
+                setTimeout(() => {
+                    contactButton.style.right = (window.innerWidth - i + 90).toString() + "px";
+                }, i * 0.4);
+            }
+        }
+
     }
+
+    
+
+
+    // Function for getting an element position relative to the page (document)
+    function elementLocation(el) {
+        let rect = el.getBoundingClientRect(),
+        scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
+        scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        return { top: rect.top + scrollTop, left: rect.left + scrollLeft }
+    }
+    
+    // example use
+    // var div = document.querySelector('div');
+    // var divOffset = offset(div);
+    // console.log(divOffset.left, divOffset.top);
 
     
 
