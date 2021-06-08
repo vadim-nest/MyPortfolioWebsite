@@ -31,6 +31,9 @@ window.onload = function () {
     let contactPageStart = elementLocation(document.querySelector("#contact")).top;
     let contactButtonRight = (window.innerWidth - document.querySelector("#contact-float").offsetLeft - document.querySelector("#contact-float").offsetWidth);
     let buttonHidden = false;
+    let vh = window.innerHeight * 0.01;
+    let changeOnContact = contactPageStart - (50 * vh);
+    
 
 
 
@@ -39,7 +42,15 @@ window.onload = function () {
     // Styling
     ///////////////////////////////////////////
 
+    // // We listen to the resize event
+    // window.addEventListener('resize', () => {
+    //     // We execute the same script as before
+    //     let vh = window.innerHeight * 0.01;
+    //     // document.documentElement.style.setProperty('--vh', `${vh}px`);
+    // });
 
+    let projectsSectionLocation = elementLocation(document.querySelector("#projects")).top / 2;
+    changeBorderHeader();
 
 
     // Contact button styling
@@ -69,13 +80,59 @@ window.onload = function () {
         contactButton.style.background = "#FFD633";
         contactButton.style.border = "solid 3px #FFD633";
         contactButton.style.boxShadow = "0px 4px 7px rgba(0, 0, 0, 0.1)";
-        document.getElementById('contact').style.transition = "all 0.4s ease-in-out";
-        document.getElementById('contact').scrollIntoView({behavior: "smooth"});         
+        document.querySelector("#contact").style.transition = "all 0.4s ease-in-out";
+        document.querySelector("#contact").scrollIntoView({behavior: "smooth"});         
     });
 
 
-    // Changing floating button on scroll
+    // Buttons in header styling
+    buttonAbout.onmouseover = function() {
+        buttonAbout.style.transition = "all 0.1s ease-in-out";
+        buttonAbout.style.color = "#ee0000";
+        buttonAbout.style.cursor = "pointer";
+    }
+    buttonAbout.onmouseout = function() {
+        buttonAbout.style.transition = "all 0.4s ease-in-out";
+        buttonAbout.style.color = "#222222";
+    }
+    buttonAbout.addEventListener('mouseup', e => {
+        document.querySelector("#about").style.transition = "all 0.4s ease-in-out";
+        document.querySelector("#about").scrollIntoView({behavior: "smooth"});         
+    });
+
+
+    buttonProjects.onmouseover = function() {
+        buttonProjects.style.transition = "all 0.1s ease-in-out";
+        buttonProjects.style.color = "#ee0000";
+        buttonProjects.style.cursor = "pointer";
+    }
+    buttonProjects.onmouseout = function() {
+        buttonProjects.style.transition = "all 0.4s ease-in-out";
+        buttonProjects.style.color = "#222222";
+    }
+    buttonProjects.addEventListener('mouseup', e => {
+        document.querySelector("#projects").style.transition = "all 0.4s ease-in-out";
+        document.querySelector("#projects").scrollIntoView({behavior: "smooth"});         
+    });
+
+
+    buttonContact.onmouseover = function() {
+        buttonContact.style.transition = "all 0.1s ease-in-out";
+        buttonContact.style.color = "#ee0000";
+        buttonContact.style.cursor = "pointer";
+    }
+    buttonContact.onmouseout = function() {
+        buttonContact.style.transition = "all 0.4s ease-in-out";
+        buttonContact.style.color = "#222222";
+    }
+    buttonContact.addEventListener('mouseup', e => {
+        document.querySelector("#contact").style.transition = "all 0.4s ease-in-out";
+        document.querySelector("#contact").scrollIntoView({behavior: "smooth"});         
+    });
+
+
     window.onscroll = function() {
+        // Changing floating button on scroll
         let top = window.scrollY;
         if ((top > changeOnProjects) && !toggleProjectChanged) {
             // Changing contact button on scroll (to envelope)
@@ -112,11 +169,6 @@ window.onload = function () {
             contactButton.classList.toggle("fa-envelope");
             toggleProjectChanged = false;
 
-            // Changing the red border in header
-            buttonAbout.style.transition = "all 0.2s ease-in-out";
-            buttonAbout.style.borderBottom = "3px solid #ee0000";
-            buttonProjects.style.transition = "all 0.2s ease-in-out";
-            buttonProjects.style.borderBottom = "3px solid #ffffff";
         }
 
         if ((top > namePosition) && !toggleLogoChanged) {
@@ -156,6 +208,11 @@ window.onload = function () {
             }
         }
 
+        // Changing red border in header on scroll
+        buttonAbout.style.transition = "all 0.4s ease-in-out";
+        buttonProjects.style.transition = "all 0.4s ease-in-out";
+        buttonContact.style.transition = "all 0.4s ease-in-out";
+        changeBorderHeader();
     }
 
     
@@ -168,6 +225,25 @@ window.onload = function () {
         scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         return { top: rect.top + scrollTop, left: rect.left + scrollLeft }
     }
+
+    // Function for changing the red line in header
+    function changeBorderHeader() {
+        if (window.scrollY < projectsSectionLocation && window.scrollY < changeOnContact) {
+            buttonAbout.style.borderBottom = "3px solid #ee0000";
+            buttonProjects.style.borderBottom = "3px solid #fff";
+            buttonContact.style.borderBottom = "3px solid #fff";
+        } else if (window.scrollY >= projectsSectionLocation && window.scrollY < changeOnContact) {
+            buttonAbout.style.borderBottom = "3px solid #fff";
+            buttonProjects.style.borderBottom = "3px solid #ee0000";
+            buttonContact.style.borderBottom = "3px solid #fff";
+        } else if (window.scrollY > projectsSectionLocation && window.scrollY > changeOnContact) {
+            buttonAbout.style.borderBottom = "3px solid #fff";
+            buttonProjects.style.borderBottom = "3px solid #fff";
+            buttonContact.style.borderBottom = "3px solid #ee0000";
+        }
+    }
+
+
     
     // example use
     // var div = document.querySelector('div');
