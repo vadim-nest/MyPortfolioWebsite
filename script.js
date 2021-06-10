@@ -43,6 +43,7 @@ window.onload = function () {
     const facebookButton = document.querySelector(".fa-facebook");
     const telegramButton = document.querySelector(".fa-telegram-plane");
     const mailButton = document.querySelector(".mail-icon");
+    const buttonOpenProject = document.querySelectorAll(".button-open-project");
     
 
     ////////////////////////////////////////////
@@ -161,6 +162,30 @@ window.onload = function () {
     buttonDarkTheme.onmouseout = function() {
         mouseOverDarkMode = false;
     }
+
+    // Open project buttons on hover
+    buttonOpenProject.forEach(element => {
+        element.onmouseover = function() { 
+            element.style.transition = "all 0.1s ease-in-out";
+            element.style.color = "#EE0000";
+        }
+        element.onmouseout = function() {
+            element.style.transition = "all 0.4s ease-in-out";
+            element.style.color = "#222222";
+        }
+
+        // Open project buttons on click
+        element.addEventListener('mousedown', e => {
+            // element.style.background = "#F5F5F5";
+            element.style.transition = "all 0.1s ease-in-out";
+            element.style.border = "solid 3px #ffdb4d";
+        });
+        element.addEventListener('mouseup', e => {
+            element.style.transition = "all 0.4s ease-in-out";
+            element.style.border = "solid 3px #FFCC00";
+        });
+    });
+
 
 
     // Email link on hover
